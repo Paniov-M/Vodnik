@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Авторизація Google</title>
+</head>
+<body>
+  <h1>Авторизація Google</h1>
+  <form id="google-auth-form">
+    <button id="google-auth-button" type="button">Увійти через Google</button>
+  </form>
+
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script>
+    // Підключення API Google
+    gapi.load('auth2', function() {
+      gapi.auth2.init({
+        client_id: 'YOUR_CLIENT_ID',
+      });
+    });
+
+    // Обробник кліків кнопки "Увійти через Google"
+    var authButton = document.getElementById('google-auth-button');
+    authButton.onclick = function() {
+      gapi.auth2.getAuthInstance().signIn().then(function() {
+        console.log('Користувач успішно авторизований.');
+        // Дії після успішної авторизації, наприклад, перенаправлення на іншу сторінку
+      }, function(error) {
+        console.error('Помилка авторизації:', error);
+      });
+    };
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="google-signin-client_id" content="908582655922-2jjk9c6iphskirpm1muadn31thlaegfm.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+<body>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+  <script>
+    // Підключення API Google
+    function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+    var id_token = googleUser.getAuthResponse().id_token;
+    }
+
+</script>
+
+</body>
+</html>

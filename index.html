@@ -1,50 +1,25 @@
-<!DOCTYPE html> 
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-
-    <!--Вказуємо ідентифікатор клієнта в Google Developers Console-->
-    <meta name="google-signin-client_id" content="908582655922-2jjk9c6iphskirpm1muadn31thlaegfm.apps.googleusercontent.com">
-
-    <!--Підключаємо бібліотеку платформи Google, які інтегрують Google Sign-In-->
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-</head>
-
-<body>
-    <!--Створюємо кнопку входа в Google з налаштуваннями по замовчуванню-->
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-    <a href="#" onclick="signOut();">Sign out</a>
-
+<!DOCTYPE html>
+<html>
+  <body>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <div id="g_id_onload"
+         data-client_id="908582655922-2jjk9c6iphskirpm1muadn31thlaegfm.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse">
+    </div>
+    <div class="g_id_signin" data-type="standard"></div>
 
     <script>
-    //Функція, щоб отримати інформацію про профіль користувача
-    function onSignIn(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); 
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); 
-    
-    //Отримуємо токен ідентифікатора користувача
-    var id_token = googleUser.getAuthResponse().id_token;
-
-    }
-
-    </script>
-
-    <script>
-
-    //Функція, яка дозволяє користувачам виходити з додатку без виходу з Google
-      function signOut() {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-          console.log('User signed out.');
-        });
+      // Підключення API Google
+      function standard(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      console.log('Name: ' + profile.getName());
+      console.log('Image URL: ' + profile.getImageUrl());
+      console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  
+      var id_token = googleUser.getAuthResponse().id_token;
       }
-
-    </script>
-
-</body>
-
+  
+  </script>
+  </body>
 </html>
